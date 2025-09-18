@@ -101,4 +101,7 @@
 - **Спільно:** код-рев’ю, обговорення вимог, документація.
 
 ---
+## Documentation
 
+- [Lab 2 — Architecture design](Lab2.md)
+- [Lab 3 — UI Prototype](Lab3.md)
