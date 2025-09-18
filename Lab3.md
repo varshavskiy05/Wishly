@@ -18,7 +18,7 @@ ___
 ___
 
 - ## Сторінка редагування та створення предметів у віш листі
-- ![Create/edit - screen](docassets/.png)
+- ![Create/edit - screen](docassets/create_page.png)
 
 ___
 
