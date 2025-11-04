@@ -1,0 +1,1 @@
+# Whishly base structure
