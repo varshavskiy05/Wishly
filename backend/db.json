@@ -1,1 +1,76 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "test@example.com",
+      "password": "123456"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Гаджеты",
+      "userId": "1"
+    },
+    {
+      "id": "2",
+      "name": "Книги",
+      "userId": "1"
+    },
+    {
+      "id": "3",
+      "name": "Одежда",
+      "userId": "1"
+    }
+  ],
+  "lists": [
+    {
+      "id": "1",
+      "name": "День рождения",
+      "categoryId": "1",
+      "userId": "1",
+      "shareId": null
+    },
+    {
+      "id": "2",
+      "name": "Новый год",
+      "categoryId": "2",
+      "userId": "1",
+      "shareId": "share123"
+    }
+  ],
+  "items": [
+    {
+      "id": "1",
+      "listId": "1",
+      "name": "iPhone 15 Pro",
+      "description": "256GB, черный",
+      "link": "https://apple.com/iphone",
+      "imageUrl": null
+    },
+    {
+      "id": "2",
+      "listId": "1",
+      "name": "AirPods Pro",
+      "description": "2-е поколение",
+      "link": "https://apple.com/airpods",
+      "imageUrl": null
+    },
+    {
+      "id": "3",
+      "listId": "2",
+      "name": "Книга 'Clean Code'",
+      "description": "Роберт Мартин",
+      "link": "https://amazon.com",
+      "imageUrl": null
+    }
+  ],
+  "shares": [
+    {
+      "id": "share123",
+      "listId": "2",
+      "createdAt": "2025-01-01T00:00:00Z"
+    }
+  ]
+}
 

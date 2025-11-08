@@ -1,0 +1,37 @@
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useAuthStore } from '../../core/store/authStore';
+
+// Экраны (пока пустые заглушки)
+import { LoginScreen } from '../../features/auth/screens/LoginScreen';
+import { HomeScreen } from '../../features/lists/screens/HomeScreen';
+
+const Stack = createNativeStackNavigator();
+const Tabs = createBottomTabNavigator();
+
+function AppTabs() {
+    return (
+        <Tabs.Navigator>
+            <Tabs.Screen name="Home" component={HomeScreen} options={{ title: 'Списки' }} />
+            {/* TODO: Categories, Shared */}
+        </Tabs.Navigator>
+    );
+}
+
+export function RootNavigator() {
+    const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+
+    return (
+        <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+                {isAuthenticated ? (
+                    <Stack.Screen name="AppTabs" component={AppTabs} />
+                ) : (
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                )}
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+}
