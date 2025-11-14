@@ -6,6 +6,7 @@ import { useAuthStore } from '../../core/store/authStore';
 import { LoginScreen } from '../../features/auth/screens/LoginScreen';
 import { HomeScreen } from '../../features/lists/screens/HomeScreen';
 import { CreateListScreen } from '../../features/lists/screens/CreateListScreen';
+import { ListDetailsScreen } from '../../features/items/screens/ListDetailsScreen';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -35,6 +36,14 @@ export function RootNavigator() {
                                 presentation: 'modal',
                                 headerShown: true,
                                 title: 'Створити список'
+                            }} 
+                        />
+                        <Stack.Screen 
+                            name="ListDetails" 
+                            component={ListDetailsScreen} 
+                            options={{ 
+                                headerShown: true,
+                                title: 'Елементи списку'
                             }} 
                         />
                     </>

@@ -25,6 +25,15 @@ export type List = {
     shareId?: string | null;
 }
 
+export type Item = {
+    id: string;
+    listId: string;
+    name: string;
+    description?: string;
+    link?: string;
+    imageUrl?: string | null;
+}
+
 export type Share = { 
     id: string;
     listId: string;
