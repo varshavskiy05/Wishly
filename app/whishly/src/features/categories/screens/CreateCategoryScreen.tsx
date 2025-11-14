@@ -12,15 +12,13 @@ export function CreateCategoryScreen() {
     
     const [name, setName] = useState('');
 
-    // Мутация для создания категории
+   
     const createMutation = useMutation({
         mutationFn: async (newCategory: { name: string; userId: string }) => {
             return await apiClient.post('/categories', newCategory);
         },
         onSuccess: () => {
-            // Обновляем список категорий
             queryClient.invalidateQueries({ queryKey: ['categories'] });
-            // Возвращаемся назад
             navigation.goBack();
         }
     });

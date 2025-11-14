@@ -37,12 +37,12 @@ export function CreateListScreen() {
 
     const handleCreate = () => {
         if (!name.trim()) {
-            alert('Введите название списка');
+            alert('Введіть назву списку');
             return;
         }
 
         if (!user) {
-            alert('Пользователь не авторизован');
+            alert('Користувач не авторизований');
             return;
         }
 
@@ -55,10 +55,10 @@ export function CreateListScreen() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Создать список</Text>
+            <Text style={styles.title}>Створити список</Text>
             
             <TextInput
-                placeholder="Название списка"
+                placeholder="Назву списку"
                 value={name}
                 onChangeText={setName}
                 style={styles.input}
@@ -78,14 +78,14 @@ export function CreateListScreen() {
             )}
 
             <Button
-                title={createMutation.isPending ? "Создание..." : "Создать"}
+                title={createMutation.isPending ? "Створення..." : "Створити"}
                 onPress={handleCreate}
                 disabled={createMutation.isPending}
             />
 
             {createMutation.isError && (
                 <Text style={styles.error}>
-                    Ошибка: {createMutation.error?.message || 'Не удалось создать список'}
+                    Ошибка: {createMutation.error?.message || 'Не вдалося створити список'}
                 </Text>
             )}
         </View>
