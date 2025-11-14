@@ -39,6 +39,24 @@
       "categoryId": "2",
       "userId": "1",
       "shareId": "share123"
+    },
+    {
+      "id": "978e",
+      "name": "Список",
+      "categoryId": "1",
+      "userId": "1"
+    },
+    {
+      "id": "5ec1",
+      "name": "New list",
+      "categoryId": "1",
+      "userId": "1"
+    },
+    {
+      "id": "4628",
+      "name": "123",
+      "categoryId": "3",
+      "userId": "1"
     }
   ],
   "items": [
@@ -75,4 +93,3 @@
     }
   ]
 }
-
