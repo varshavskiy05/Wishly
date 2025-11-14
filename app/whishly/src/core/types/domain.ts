@@ -16,11 +16,13 @@ export type Category = {
 
 export type List = {
     id: string;
-    listId: string;
     name:string;
     description?: string;
+    categoryId?: string;
+    userId: string;
     link?: string;
     imageUrl?: string;
+    shareId?: string | null;
 }
 
 export type Share = { 

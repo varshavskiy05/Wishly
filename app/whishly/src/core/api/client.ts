@@ -12,7 +12,7 @@ export const apiClient = axios.create({
     },
 });
 
-apiClient.interceptors.response.use(async (config) => {
+apiClient.interceptors.request.use(async (config) => {
     const token = 'mock-token';
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;

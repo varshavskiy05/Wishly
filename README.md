@@ -105,10 +105,11 @@
 
 - [Lab 2 — Architecture design](Lab2.md)
 - [Lab 3 — UI Prototype](Lab3.md)
+- [Lab 4 — Базова структура коду та організація репозиторію](#лабораторна-робота-4--базова-структура-коду-та-організація-репозиторію)
 
 ---
 
-## Лабораторна робота 3 — Базова структура коду та організація репозиторію
+## Лабораторна робота 4 — Базова структура коду та організація репозиторію
 
 ### Мета роботи
 - Засвоїти принципи побудови базової структури програмного проєкту відповідно до обраної архітектури.
@@ -198,16 +199,32 @@ src/
 ### Встановлення залежностей
 
 **Frontend:**
+```bash
 cd app/whishly
-npm install**Backend (мок):**h
-cd backend
-npm install### Запуск
+npm install
+```
 
-**1. Запусти бекенд (json-server): **
+**Backend (мок):**
+```bash
 cd backend
-npx json-server --watch db.json --port 4000**2. Запусти фронтенд (у новому терміналі): **
+npm install
+```
+
+### Запуск
+
+**1. Запусти бекенд (json-server):**
+```bash
+cd backend
+npx json-server --watch db.json --port 4000
+```
+
+**2. Запусти фронтенд (у новому терміналі):**
+```bash
 cd app/whishly
-BASE_URL=http://localhost:4000 npx expo start**3. Відкрий додаток:**
+BASE_URL=http://localhost:4000 npx expo start
+```
+
+**3. Відкрий додаток:**
 - Натисніть `i` для iOS симулятора
 - Натисніть `a` для Android емулятора
 - Або відскануй QR-код у Expo Go на телефоні
@@ -218,7 +235,9 @@ BASE_URL=http://localhost:4000 npx expo start**3. Відкрий додаток:
 - `http://localhost:4000/lists` - список вішалістів
 - `http://localhost:4000/items` - елементи списків
 
-### Застосування SOLID у проекті
+---
+
+## Застосування SOLID у проекті
 
 **S (Single Responsibility):**
 - `authStore.ts` - тільки управління авторизацією (user, token, isAuthenticated)
@@ -227,15 +246,19 @@ BASE_URL=http://localhost:4000 npx expo start**3. Відкрий додаток:
 
 **D (Dependency Inversion):**
 - `ListRepository` інтерфейс – абстракція для роботи зі списками
-- Компоненти залежить від інтерфейсу, а чи не від конкретної реалізації (API/Mock)
+- Компоненти залежать від інтерфейсу, а не від конкретної реалізації (API/Mock)
 
-**Приклад:**t
+**Приклад:**
+```typescript
 // Погано (залежність від конкретної реалізації):
 const lists = await apiClient.get('/lists');
 
 // Добре (залежність від абстракції):
-const listRepo: ListRepository = новий ApiListRepository();
-const lists = await listRepo.getLists();**Переваги:**
+const listRepo: ListRepository = new ApiListRepository();
+const lists = await listRepo.getLists();
+```
+
+**Переваги:**
 - Легко замінити реалізацію (API → Mock для тестів)
 - Легко тестувати (можна підставити Mock)
 - Дотримання принципу Open/Closed (розширюваність без модифікації)
