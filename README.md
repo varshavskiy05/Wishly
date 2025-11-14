@@ -184,3 +184,58 @@ src/
 - Репозиторій на GitHub із базовою структурою коду (класи, модулі, функції — скелети).
 - Документація у `README.md` (опис проєкту, структура, ролі, інструкції).
 - Узгоджений Git‑процес (гілки, PR, код‑ревʼю).
+
+
+---
+
+## Встановлення та запуск
+
+### Вимоги
+- Node.js 18+
+- npm або yarn
+- Expo CLI (встановлюється автоматично)
+
+### Встановлення залежностей
+
+**Frontend:**
+cd app/whishly
+npm install**Backend (мок):**h
+cd backend
+npm install### Запуск
+
+**1. Запусти бекенд (json-server): **
+cd backend
+npx json-server --watch db.json --port 4000**2. Запусти фронтенд (у новому терміналі): **
+cd app/whishly
+BASE_URL=http://localhost:4000 npx expo start**3. Відкрий додаток:**
+- Натисніть `i` для iOS симулятора
+- Натисніть `a` для Android емулятора
+- Або відскануй QR-код у Expo Go на телефоні
+
+### Перевірка роботи API
+
+Відкрий у браузері:
+- `http://localhost:4000/lists` - список вішалістів
+- `http://localhost:4000/items` - елементи списків
+
+### Застосування SOLID у проекті
+
+**S (Single Responsibility):**
+- `authStore.ts` - тільки управління авторизацією (user, token, isAuthenticated)
+- `apiClient.ts` - тільки HTTP-запити до бекенду
+- `LoginScreen.tsx` - тільки UI логіна
+
+**D (Dependency Inversion):**
+- `ListRepository` інтерфейс – абстракція для роботи зі списками
+- Компоненти залежить від інтерфейсу, а чи не від конкретної реалізації (API/Mock)
+
+**Приклад:**t
+// Погано (залежність від конкретної реалізації):
+const lists = await apiClient.get('/lists');
+
+// Добре (залежність від абстракції):
+const listRepo: ListRepository = новий ApiListRepository();
+const lists = await listRepo.getLists();**Переваги:**
+- Легко замінити реалізацію (API → Mock для тестів)
+- Легко тестувати (можна підставити Mock)
+- Дотримання принципу Open/Closed (розширюваність без модифікації)
