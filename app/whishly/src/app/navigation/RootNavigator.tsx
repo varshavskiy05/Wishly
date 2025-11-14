@@ -7,6 +7,7 @@ import { LoginScreen } from '../../features/auth/screens/LoginScreen';
 import { HomeScreen } from '../../features/lists/screens/HomeScreen';
 import { CreateListScreen } from '../../features/lists/screens/CreateListScreen';
 import { ListDetailsScreen } from '../../features/items/screens/ListDetailsScreen';
+import { EditItemScreen } from '../../features/items/screens/EditItemScreen';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -44,6 +45,15 @@ export function RootNavigator() {
                             options={{ 
                                 headerShown: true,
                                 title: 'Елементи списку'
+                            }} 
+                        />
+                        <Stack.Screen 
+                            name="EditItem" 
+                            component={EditItemScreen} 
+                            options={{ 
+                                presentation: 'modal',
+                                headerShown: true,
+                                title: 'Додати елемент'
                             }} 
                         />
                     </>

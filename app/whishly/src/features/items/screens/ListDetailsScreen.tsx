@@ -2,12 +2,20 @@ import React from 'react';
 import { View, Text, FlatList, Button, StyleSheet, Alert } from 'react-native';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { apiClient } from '../../../core/api/client';
 import type { Item } from '../../../core/types/domain';
 
+type RootStackParamList = {
+    EditItem: { listId: string };
+    ListDetails: { listId: string };
+};
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
 export function ListDetailsScreen() {
     const route = useRoute();
-    const navigation = useNavigation();
+    const navigation = useNavigation<NavigationProp>();
     const queryClient = useQueryClient();
     
     // Получаем listId из параметров навигации
@@ -77,10 +85,7 @@ export function ListDetailsScreen() {
             />
             <Button 
                 title="+ Додати елемент" 
-                onPress={() => {
-                    // TODO: навигация на создание элемента
-                    alert('Створення елемента буде додано далі');
-                }} 
+                onPress={() => navigation.navigate('EditItem', { listId })} 
             />
         </View>
     );
