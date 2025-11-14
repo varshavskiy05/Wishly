@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, FlatList, Button, StyleSheet, Alert } from 'react-native';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import * as Clipboard from 'expo-clipboard';
 import { apiClient } from '../../../core/api/client';
-import type { Item } from '../../../core/types/domain';
+import type { Item, Share } from '../../../core/types/domain';
 
 type RootStackParamList = {
     EditItem: { listId: string };
@@ -18,10 +19,21 @@ export function ListDetailsScreen() {
     const navigation = useNavigation<NavigationProp>();
     const queryClient = useQueryClient();
     
-    // Получаем listId из параметров навигации
+
     const { listId } = route.params as { listId: string };
     
-    // Загружаем элементы списка
+    const [shareId, setShareId] = useState<string | null>(null);
+    
+   
+    const { data: list } = useQuery({
+        queryKey: ['list', listId],
+        queryFn: async () => {
+            const res = await apiClient.get(`/lists/${listId}`);
+            return res.data;
+        }
+    });
+    
+
     const { data: items, isLoading } = useQuery({
         queryKey: ['items', listId],
         queryFn: async () => {
@@ -30,13 +42,39 @@ export function ListDetailsScreen() {
         }
     });
 
-    // Мутация для удаления элемента
+   
     const deleteMutation = useMutation({
         mutationFn: async (id: string) => {
             return await apiClient.delete(`/items/${id}`);
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['items', listId] });
+        }
+    });
+
+
+    const shareMutation = useMutation({
+        mutationFn: async () => {
+            const shareRes = await apiClient.post<Share>('/shares', { listId });
+            const shareId = shareRes.data.id;
+            
+            if (list) {
+                await apiClient.patch(`/lists/${listId}`, { shareId });
+            }
+            
+            return shareRes.data;
+        },
+        onSuccess: async (data) => {
+            setShareId(data.id);
+            queryClient.invalidateQueries({ queryKey: ['list', listId] });
+            queryClient.invalidateQueries({ queryKey: ['lists'] });
+            const shareUrl = `whishly://shared/${data.id}`;
+            await Clipboard.setStringAsync(shareUrl);
+            Alert.alert(
+                'Посилання створено та скопійовано!',
+                `Посилання скопійовано в буфер обмена:\n${shareUrl}\n\nТепер ви можете поділитися ним.`,
+                [{ text: 'OK' }]
+            );
         }
     });
 
@@ -53,6 +91,24 @@ export function ListDetailsScreen() {
                 }
             ]
         );
+    };
+
+    const handleShare = async () => {
+   
+        const currentShareId = list?.shareId || shareId;
+        if (currentShareId) {
+            const shareUrl = `whishly://shared/${currentShareId}`;
+            
+            await Clipboard.setStringAsync(shareUrl);
+            Alert.alert(
+                'Посилання скопійовано!',
+                `Посилання скопійовано в буфер обмена:\n${shareUrl}\n\nТепер ви можете поділитися ним.`,
+                [{ text: 'OK' }]
+            );
+        } else {
+            // Создаём новую публичную ссылку
+            shareMutation.mutate();
+        }
     };
 
     if (isLoading) return <Text>Завантаження...</Text>;
@@ -83,10 +139,17 @@ export function ListDetailsScreen() {
                 )}
                 ListEmptyComponent={<Text>Немає елементів. Додайте перший!</Text>}
             />
-            <Button 
-                title="+ Додати елемент" 
-                onPress={() => navigation.navigate('EditItem', { listId })} 
-            />
+            <View style={styles.actions}>
+                <Button 
+                    title="+ Додати елемент" 
+                    onPress={() => navigation.navigate('EditItem', { listId })} 
+                />
+                <Button 
+                    title="Поділитися" 
+                    onPress={handleShare}
+                    color="#0066cc"
+                />
+            </View>
         </View>
     );
 }
@@ -125,6 +188,11 @@ const styles = StyleSheet.create({
     itemLink: {
         fontSize: 12,
         color: '#0066cc'
+    },
+    actions: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop: 10
     }
 });
 
