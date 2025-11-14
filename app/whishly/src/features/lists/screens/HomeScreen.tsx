@@ -59,7 +59,7 @@ export function HomeScreen() {
     if (isError) {
         return (
             <View style={styles.container}>
-                <Text style={styles.error}>Ошибка загрузки: {error?.message || 'Невідома помилка'}</Text>
+                <Text style={styles.error}>Помилка завантаження: {error?.message || 'Невідома помилка'}</Text>
                 <Button title="Оновити" onPress={() => navigation.goBack()} />
             </View>
         );
@@ -85,7 +85,7 @@ export function HomeScreen() {
                         />
                     </View>
                 )}
-                ListEmptyComponent={<Text>Нет списков. Создайте первый!</Text>}
+                ListEmptyComponent={<Text>Немає списків. Створити перший!</Text>}
             />
             <Button title="+ Створити список" onPress={() => navigation.navigate('CreateList')} />
         </View>

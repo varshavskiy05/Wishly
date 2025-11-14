@@ -9,22 +9,21 @@ export function EditItemScreen() {
     const route = useRoute();
     const queryClient = useQueryClient();
     
-    // Получаем listId из параметров навигации
     const { listId } = route.params as { listId: string };
     
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [link, setLink] = useState('');
 
-    // Мутация для создания элемента
+
     const createMutation = useMutation({
         mutationFn: async (newItem: { name: string; description?: string; link?: string; listId: string }) => {
             return await apiClient.post('/items', newItem);
         },
         onSuccess: () => {
-            // Обновляем список элементов
+            
             queryClient.invalidateQueries({ queryKey: ['items', listId] });
-            // Возвращаемся назад
+            
             navigation.goBack();
         }
     });

@@ -8,13 +8,12 @@ export function LoginScreen() {
     const setAuth = useAuthStore((s) => s.setAuth);
 
     const handleLogin = () => {
-        // ИСПРАВЛЕНИЕ: Добавляем заглушки для password, createdAt и updatedAt
         setAuth({
             id: '1',
             email,
-            password: '',          // Заглушка, так как поле обязательно
-            createdAt: new Date(), // Используем текущую дату
-            updatedAt: new Date(), // Используем текущую дату
+            password: '',          
+            createdAt: new Date(), 
+            updatedAt: new Date(), 
         }, 'mock-token');
     };
 

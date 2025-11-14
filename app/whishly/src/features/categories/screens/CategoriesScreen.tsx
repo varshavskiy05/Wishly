@@ -7,6 +7,7 @@ import { apiClient } from '../../../core/api/client';
 import type { Category } from '../../../core/types/domain';
 import { useAuthStore } from '../../../core/store/authStore';
 
+
 type RootStackParamList = {
     CreateCategory: undefined;
 };
@@ -18,7 +19,7 @@ export function CategoriesScreen() {
     const queryClient = useQueryClient();
     const user = useAuthStore((s) => s.user);
 
-    // Загружаем категории
+    
     const { data: categories, isLoading } = useQuery({
         queryKey: ['categories'],
         queryFn: async () => {
@@ -27,7 +28,7 @@ export function CategoriesScreen() {
         }
     });
 
-    // Мутация для удаления категории
+   
     const deleteMutation = useMutation({
         mutationFn: async (id: string) => {
             return await apiClient.delete(`/categories/${id}`);
