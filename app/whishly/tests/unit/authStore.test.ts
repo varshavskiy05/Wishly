@@ -9,7 +9,6 @@ import type { User } from '../../src/core/types/domain';
 
 describe('authStore', () => {
   beforeEach(() => {
-    // Скидаємо стан перед кожним тестом
     const { result } = renderHook(() => useAuthStore());
     act(() => {
       result.current.logout();
@@ -57,14 +56,12 @@ describe('authStore', () => {
       updatedAt: new Date(),
     };
 
-    // Спочатку встановлюємо авторизацію
     act(() => {
       result.current.setAuth(mockUser, 'test-token');
     });
 
     expect(result.current.isAuthenticated).toBe(true);
 
-    // Потім виконуємо logout
     act(() => {
       result.current.logout();
     });

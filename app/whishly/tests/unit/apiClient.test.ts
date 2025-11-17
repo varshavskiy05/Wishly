@@ -6,7 +6,6 @@
 import axios from 'axios';
 import { apiClient } from '../../src/core/api/client';
 
-// Мокаємо expo-constants
 jest.mock('expo-constants', () => ({
   default: {
     expoConfig: {
@@ -31,16 +30,13 @@ describe('apiClient', () => {
   });
 
   it('додає Authorization header через interceptor', async () => {
-    // Мокаємо axios request
     const mockRequest = jest.fn((config) => Promise.resolve(config));
     apiClient.interceptors.request.use(mockRequest);
 
     await apiClient.get('/test');
 
-    // Перевіряємо, що interceptor викликався
     expect(mockRequest).toHaveBeenCalled();
     
-    // Перевіряємо, що Authorization header додано
     const lastCall = mockRequest.mock.calls[0][0];
     expect(lastCall.headers.Authorization).toBe('Bearer mock-token');
   });

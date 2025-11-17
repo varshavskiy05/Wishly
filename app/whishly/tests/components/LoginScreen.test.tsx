@@ -54,7 +54,6 @@ describe('LoginScreen', () => {
       expect(mockSetAuth).toHaveBeenCalled();
     });
 
-    // Перевіряємо, що setAuth викликано з правильними параметрами
     const callArgs = mockSetAuth.mock.calls[0];
     expect(callArgs[0].email).toBe('test@example.com');
     expect(callArgs[0].id).toBe('1');
@@ -67,8 +66,6 @@ describe('LoginScreen', () => {
 
     fireEvent.press(loginButton);
 
-    // setAuth все одно викликається, але з порожнім email
-    // Це поведінка поточного коду
     expect(mockSetAuth).toHaveBeenCalled();
   });
 });
